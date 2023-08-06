@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/widgets/task_list.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -13,20 +14,21 @@ class TaskScreen extends StatelessWidget {
           const TopMenu(),
           Expanded(
             child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30)
-                ),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
                 color: Colors.white,
               ),
+              child: const TasksList(),
             ),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
-        onPressed: () {  },
+        onPressed: () {},
         child: const Icon(
           Icons.add,
           color: Colors.white,
@@ -80,4 +82,3 @@ class TopMenu extends StatelessWidget {
     );
   }
 }
-
