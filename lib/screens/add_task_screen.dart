@@ -37,11 +37,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             const SizedBox(
               height: 12,
             ),
-            TextField(
+            TextFormField(
               onChanged: (value) {
                 task = value;
               },
+              textAlign: TextAlign.center,
+              autofocus: true,
               decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
                 hintText: "Add your task",
               ),
             ),
