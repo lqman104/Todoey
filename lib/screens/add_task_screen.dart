@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_provider.dart';
+
+import '../models/task.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key, required this.callback});
-
-  final void Function(String taskName) callback;
+  const AddTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,8 @@ class AddTaskScreen extends StatelessWidget {
             ),
             FilledButton(
               onPressed: () {
-                callback(titleText);
+                context.read<TaskProvider>().addTask(Task(name: titleText));
+                Navigator.pop(context);
               },
               child: const Text("Add"),
             )

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_provider.dart';
 import 'package:todoey/widgets/task_list.dart';
 
-import '../models/task.dart';
 import 'add_task_screen.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -12,13 +13,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final List<Task> list = [
-    Task(name: "Buy an egg"),
-    Task(name: "Buy a milk"),
-    Task(name: "Buy a bread"),
-    Task(name: "Buy a tomato"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +20,7 @@ class _TaskScreenState extends State<TaskScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TopMenu(tasksLeft: list.length),
+          TopMenu(tasksLeft: context.watch<TaskProvider>().getTaskSize()),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -37,7 +31,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 color: Colors.white,
               ),
               child: TasksList(
-                tasks: list,
+                tasks: context.watch<TaskProvider>().tasks,
               ),
             ),
           )
@@ -53,14 +47,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: AddTaskScreen(
-                  callback: (task) {
-                    setState(() {
-                      list.add(Task(name: task));
-                      Navigator.pop(context);
-                    });
-                  },
-                ),
+                child: const AddTaskScreen(),
               ),
             ),
             isScrollControlled: true,
