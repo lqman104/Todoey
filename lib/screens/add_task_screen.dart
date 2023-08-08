@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class AddTaskScreen extends StatelessWidget {
+  const AddTaskScreen({super.key, required this.callback});
 
-  @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
-}
-
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  String task = "";
+  final void Function(String taskName) callback;
 
   @override
   Widget build(BuildContext context) {
+    String titleText = "";
     return Container(
       color: const Color(0xFF757575),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
         decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -39,7 +36,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             TextFormField(
               onChanged: (value) {
-                task = value;
+                titleText = value;
               },
               textAlign: TextAlign.center,
               autofocus: true,
@@ -52,7 +49,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               height: 20,
             ),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                callback(titleText);
+              },
               child: const Text("Add"),
             )
           ],

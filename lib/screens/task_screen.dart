@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/widgets/task_list.dart';
 
+import '../models/task.dart';
 import 'add_task_screen.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
+
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+  final List<Task> list = [
+    Task(name: "Buy an egg"),
+    Task(name: "Buy a milk"),
+    Task(name: "Buy a bread"),
+    Task(name: "Buy a tomato"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +26,7 @@ class TaskScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const TopMenu(),
+          TopMenu(tasksLeft: list.length),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -23,7 +36,9 @@ class TaskScreen extends StatelessWidget {
                     topRight: Radius.circular(30)),
                 color: Colors.white,
               ),
-              child: const TasksList(),
+              child: TasksList(
+                tasks: list,
+              ),
             ),
           )
         ],
@@ -38,7 +53,14 @@ class TaskScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: const AddTaskScreen(),
+                child: AddTaskScreen(
+                  callback: (task) {
+                    setState(() {
+                      list.add(Task(name: task));
+                      Navigator.pop(context);
+                    });
+                  },
+                ),
               ),
             ),
             isScrollControlled: true,
@@ -54,7 +76,9 @@ class TaskScreen extends StatelessWidget {
 }
 
 class TopMenu extends StatelessWidget {
-  const TopMenu({super.key});
+  final int tasksLeft;
+
+  const TopMenu({super.key, required this.tasksLeft});
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +89,10 @@ class TopMenu extends StatelessWidget {
         right: 30,
         bottom: 30,
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white,
             child: Icon(
@@ -77,10 +101,10 @@ class TopMenu extends StatelessWidget {
               color: Colors.lightBlueAccent,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
-          Text(
+          const Text(
             "Todoey",
             style: TextStyle(
               color: Colors.white,
@@ -89,8 +113,8 @@ class TopMenu extends StatelessWidget {
             ),
           ),
           Text(
-            "12 Task",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+            "$tasksLeft tasks",
+            style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
         ],
       ),
