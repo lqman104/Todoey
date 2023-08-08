@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/models/task_provider.dart';
+import 'package:todoey/widgets/top_menu.dart';
 import 'package:todoey/widgets/task_list.dart';
 
 import 'add_task_screen.dart';
 
-class TaskScreen extends StatefulWidget {
+class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
 
-  @override
-  State<TaskScreen> createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +26,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     topRight: Radius.circular(30)),
                 color: Colors.white,
               ),
-              child: TasksList(
-                tasks: context.watch<TaskProvider>().tasks,
-              ),
+              child: const TasksList(),
             ),
           )
         ],
